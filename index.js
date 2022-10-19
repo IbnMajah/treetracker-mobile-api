@@ -13,7 +13,7 @@ const Data = require("./lib/data");
 
 const config = require("./config/config");
 const pool = new Pool({
-  connectionString: "postgresql://postgres:password@localhost:5432/treetracker_db",
+  connectionString: config.connectionString,
 });
 
 pool.on("connect", (client) => {
@@ -31,7 +31,7 @@ const data = new Data(pool);
 const app = express();
 const port = process.env.NODE_PORT || 3005;
 
-// Sentry.init({ dsn: config.sentry_dsn });
+Sentry.init({ dsn: config.sentry_dsn });
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
